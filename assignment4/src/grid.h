@@ -12,21 +12,22 @@
 #include <unistd.h>
 #include <string.h>
 #include <assert.h>
-#define dimlimits(x) ( (x)<9 && (x)>=0 )
-#define nlimits(x) ( (x)<=9 && (x)>=0 )
 
-typedef struct grid_s{
-	int unique;			/* if 1 after solving, puzzle has unique solution */
-	struct{
-		int val;		/* value of element i, j */
-		struct{
-			int count;	/* number of possible choices for element i, j */
-			int num[10];/* map of choices: num[k]==1 if k is a valid choice
-						for element i, j, else num[k]=0 */
-		}choices;		/* struct choices is used while solving the
-						puzzle and is otherwise undefined */
-  	}elts[9][9];		/* sudoku grid elements; 0<=i, j<=9 */
-}Grid_T;
+#define dimlimits(x) ( (x) < 9 && (x) >= 0 )
+#define nlimits(x) ( (x) <= 9 && (x) >= 0 )
+
+typedef struct grid_s {
+	int unique;				/* if 1 after solving, puzzle has unique solution */
+	struct {
+		int val;			/* value of element i, j */
+		struct {
+			int count;		/* number of possible choices for element i, j */
+			int num[10];	/* map of choices: num[k]==1 if k is a valid choice
+							   for element i, j, else num[k]=0 */
+		} choices;			/* struct choices is used while solving the
+							   puzzle and is otherwise undefined */
+  	} elts[9][9];			/* sudoku grid elements; 0<=i, j<=9 */
+} Grid_T;
 
 /* update value of i, j to n */
 void grid_update_value(Grid_T *g, int i, int j, int n);
@@ -41,8 +42,8 @@ void grid_clear_choice(Grid_T *g, int i, int j, int n);
 /* true if choice n for elt i, j is valid */
 int grid_choice_is_valid(Grid_T g, int i, int j, int n);
 
-/* remove n from choices of elt i, j and adjust count only if n is a
-   valid choice for elt i, j */
+/*  remove n from choices of elt i, j and adjust count only if n is a
+	valid choice for elt i, j  */
 void grid_remove_choice(Grid_T *g, int i, int j, int n);
 
 /* return count, set (to 9), or clear (to 0) count for elt i, j */

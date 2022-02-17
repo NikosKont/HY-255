@@ -1,8 +1,9 @@
-/* Nikolaos Kontogeorgis - 4655
+/*  Nikolaos Kontogeorgis - 4655
 	HY255 - Assignment 3
-	symtablehash.c */
+	symtablehash.c  */
 
 #include "symtable.h"
+
 #define buckets 509
 
 struct Binding {
@@ -95,9 +96,9 @@ int SymTable_put(SymTable_T oSymTable, const char *pcKey, const void *pvValue) {
 	return 1;
 }
 
-/* If key pcKey exists within a binding of oSymTable, the binding is removed and
+/*  If key pcKey exists within a binding of oSymTable, the binding is removed and
 	the function returns 1, otherwise no action is carried out and the function
-	returns 0 */
+	returns 0  */
 int SymTable_remove(SymTable_T oSymTable, const char *pcKey) {
 	Binding_T *table, curr, prev;
 	unsigned int hash;
@@ -130,8 +131,8 @@ int SymTable_remove(SymTable_T oSymTable, const char *pcKey) {
 	return 1;
 }
 
-/* If key pcKey exists within a binding of oSymTable, the function returns 1
-   otherwise the fuinction returns 0 */
+/*  If key pcKey exists within a binding of oSymTable, the function returns 1
+	otherwise the fuinction returns 0  */
 int SymTable_contains(SymTable_T oSymTable, const char *pcKey) {
 	Binding_T curr;
 	unsigned int hash;
@@ -148,8 +149,8 @@ int SymTable_contains(SymTable_T oSymTable, const char *pcKey) {
 	return 0;
 }
 
-/* If key pcKey exists within a binding ot oSymTable, the function returns the
-   value attached to it otherwise it returns NULL */
+/*	If key pcKey exists within a binding ot oSymTable, the function returns the
+	value attached to it otherwise it returns NULL  */
 void *SymTable_get(SymTable_T oSymTable, const char *pcKey) {
 	Binding_T curr;
 	unsigned int hash;

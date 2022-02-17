@@ -1,21 +1,21 @@
 #include <stdio.h>
 
-#define offset  182             /*offset tou map se sxesh me char set*/
-#define def     0               /*default state*/
+#define offset  182             /* offset of map relative to the char set */
+#define def     0               /* default state */
 #define M       1
-#define N       2               /*special states*/
+#define N       2               /* special states */
 #define m       3
 #define n       4
 
-void create_map(char *map[]){   /*dhmiourgia map*/
-    map[0] = "'A";              /*182:Ά*/
-    map[1] = "\0";              /*183: .*/
+void create_map(char *map[]) {   /* create map */
+    map[0] = "'A";              /* 182: Ά */
+    map[1] = "\0";              /* 183: . */
     map[2] = "'E";
     map[3] = "'H";
     map[4] = "'I";
-    map[5] = "\0";              /*187: »*/
+    map[5] = "\0";              /* 187: » */
     map[6] = "'O";
-    map[7] = "\0";              /*189: ½*/
+    map[7] = "\0";              /* 189: ½ */
     map[8] = "'Y";
     map[9] = "'W";
     map[10] = "i'\"";
@@ -36,7 +36,7 @@ void create_map(char *map[]){   /*dhmiourgia map*/
     map[25] = "O";
     map[26] = "P";
     map[27] = "R";
-    map[28] = "\0";             /*210: empty?*/
+    map[28] = "\0";             /* 210: empty? */
     map[29] = "S";
     map[30] = "T";
     map[31] = "Y";
@@ -80,107 +80,115 @@ void create_map(char *map[]){   /*dhmiourgia map*/
     map[69] = "y\"";
     map[70] = "o'";
     map[71] = "y'";
-    map[72] = "w'";             /*254: ώ*/
+    map[72] = "w'";             /* 254: ώ */
 }
 
-int state_select(int in){       /*ka8orizei to trexon state*/
-    switch (in){
-    case 204:
-        return M;
-    case 205:
-        return N;
-    case 236:
-        return m;
-    case 237:
-        return n;
-    default:
-        return def;
+int state_select(int in) {       /* determines current state */
+    switch (in) {
+        case 204:
+            return M;
+        case 205:
+            return N;
+        case 236:
+            return m;
+        case 237:
+            return n;
+        default:
+            return def;
     }
 }
 
-/*periptwsh M*/
-/*diavazei epomeno xarakthra kai an einai p/P emfanizei B*/
-/*alliws emfanizei M kai epistrefei ton epomeno xarakthra*/
-int m_cap(int in){
+/*  case M:
+    reads next character; if p or P prints B
+    else prints M and returns next character  */
+int m_cap(int in) {
     int next = getchar();
 
-    if (next == 208 || next == 240){
+    if (next == 208 || next == 240) {
         putchar('B');
         return -2;
-    }else{
+    }
+    else {
         putchar('M');
         return next;
     }
 }
 
-/*periptwsh N*/
-/*diavazei epomeno xarakthra kai an einai t/T emfanizei D*/
-/*alliws emfanizei N kai epistrefei ton epomeno xarakthra*/
-int n_cap(int in){
+/*  case N:
+    reads next character; if t or T prints D
+    else prints N and returns next character  */
+int n_cap(int in) {
     int next = getchar();
 
-    if (next == 212 || next == 244){
+    if (next == 212 || next == 244) {
         putchar('D');
         return -2;
-    }else{
+    }
+    else {
         putchar('N');
         return next;
     }
 }
 
-/*periptwsh m*/
-/*diavazei epomeno xarakthra kai an einai p/P emfanizei b*/
-/*alliws emfanizei m kai epistrefei ton epomeno xarakthra*/
-int m_sm(int in){
+/*  case m:
+    reads next character; if p or P prints b
+    else prints m and returns next character */
+int m_sm(int in) {
     int next = getchar();
 
-    if (next == 208 || next == 240){
+    if (next == 208 || next == 240) {
         putchar('b');
         return -2;
-    }else{
+    }
+    else {
         putchar('m');
         return next;
     }
 }
 
-/*periptwsh n*/
-/*diavazei epomeno xarakthra kai an einai t/T emfanizei d*/
-/*alliws emfanizei d kai epistrefei ton epomeno xarakthra*/
-int n_sm(int in){
+/*  case n:
+    reads next character; if t or T prints d
+    else prints n and returns next character */
+int n_sm(int in) {
     int next = getchar();
 
-    if (next == 212 || next == 244){
+    if (next == 212 || next == 244) {
         putchar('d');
         return -2;
-    }else{
+    }
+    else {
         putchar('n');
         return next;
     }
 }
 
-/*opoiadhpote allh periptwsh*/
-/*an o xarakthras einai idios sta 2 char sets emfanizei ton idio amesws*/
-/*alliws emfanizei ton antistoixo tou symfwna me to map*/
-int other(int in){
+/*  default case:
+    if the character is the same in both char sets it is printed as-is
+    else prints its mapped character */
+int other(int in) {
     int j = 0;
     char *map[73];
     create_map(map);
 
-    if (in < 182 || in == 183 || in == 187 || in == 189 || in == 210){
+    if (in < 182 || in == 183 || in == 187 || in == 189 || in == 210) {
         putchar(in);
-    }else{
-        while ((map[in - offset][j]) != 0){
+    }
+    else {
+        while ((map[in - offset][j]) != 0) {
             putchar(map[in - offset][j++]);
         }
     }
     return -2;
 }
 
-/*kalei tis katallhles synarthseis gia ka8orismo state kai output*/
-/*an lavei -2 synexizei to input, an lavei EOF prokalei termatismo tou*/
-/*programmatos, an lavei kwdiko xarakthra kalei ton eauto ths gia auton*/
-int output(int in){
-    int (*state_functions[])(int in) = {*other, *m_cap, *n_cap, *m_sm, *n_sm};
+const int (*state_functions[])(int in) = {*other, *m_cap, *n_cap, *m_sm, *n_sm};
+
+/*  if in == -2 then input continues,
+    if in == EOF program stops,
+    if in == a character code then the appropriate function 
+    to print next character(s) depending on the current state
+    is called and returns the next character  */
+int output(int in) {
     int state = state_select(in);
     in = state_functions[state](in);
 
@@ -190,11 +198,10 @@ int output(int in){
     return 0;
 }
 
-/*kalei epanalhptika thn output mexri na diavastei EOF*/
-int main(){
+int main() {
     int in;
 
-    while ((in = getchar()) != EOF){
+    while ((in = getchar()) != EOF) {
         if ((output(in)) == EOF) break;
     }
 

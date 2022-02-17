@@ -32,8 +32,8 @@ int grid_choice_is_valid(Grid_T g, int i, int j, int n){
 	return g.elts[i][j].choices.num[n];
 }
 
-/* remove n from choices of elt i, j and adjust count only if n is a
-	valid choice for elt i, j */
+/*  remove n from choices of elt i, j and adjust count only if n is a
+	valid choice for elt i, j  */
 void grid_remove_choice(Grid_T *g, int i, int j, int n){
 	assert(g && dimlimits(i) && dimlimits(j) && nlimits(n));
 	if (grid_choice_is_valid(*g, i, j, n)){

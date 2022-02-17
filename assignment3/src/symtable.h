@@ -1,6 +1,6 @@
-/* Nikolaos Kontogeorgis - 4655
+/*  Nikolaos Kontogeorgis - 4655
 	HY255 - Assignment 3
-	symtable.h */
+	symtable.h  */
 
 #include <assert.h>
 #include <stdlib.h>
