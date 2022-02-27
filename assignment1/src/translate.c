@@ -167,6 +167,7 @@ int n_sm(int in) {
     else prints its mapped character */
 int other(int in) {
     int j = 0;
+    char c;
     char *map[73];
     create_map(map);
 
@@ -174,14 +175,12 @@ int other(int in) {
         putchar(in);
     }
     else {
-        while ((map[in - offset][j]) != 0) {
-            putchar(map[in - offset][j++]);
+        while (((c = map[in - offset][j++])) != 0) {
+            putchar(c);
         }
     }
     return -2;
 }
-
-const int (*state_functions[])(int in) = {*other, *m_cap, *n_cap, *m_sm, *n_sm};
 
 /*  if in == -2 then input continues,
     if in == EOF program stops,
@@ -189,6 +188,7 @@ const int (*state_functions[])(int in) = {*other, *m_cap, *n_cap, *m_sm, *n_sm};
     to print next character(s) depending on the current state
     is called and returns the next character  */
 int output(int in) {
+    const int (*state_functions[])(int in) = {*other, *m_cap, *n_cap, *m_sm, *n_sm};
     int state = state_select(in);
     in = state_functions[state](in);
 
