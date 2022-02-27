@@ -175,7 +175,7 @@ int other(int in) {
         putchar(in);
     }
     else {
-        while (((c = map[in - offset][j++])) != 0) {
+        while ((c = map[in - offset][j++]) != 0) {
             putchar(c);
         }
     }
